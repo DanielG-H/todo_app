@@ -1,27 +1,17 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-
-
-todos = [
-    {
-        'author': 'daniel garcia',
-        'title': 'my first to-do',
-        'description': 'a nice to-do',
-        'date_posted': '7/12/20',
-        'due_date': '8/12/20',
-    },
-]
+from .models import ToDo
 
 
 def home(request):
     context = {
-        "todos": todos,
+        "todos": ToDo.objects.all(),
     }
     return render(request, 'toDo/home.html', context)
 
 
-# class PostListView(ListView):
-#     model = to_do
-#     template_name = html
-#     context_object_name = 'todos'
-#     ordering = ['-date_posted']
+class PostListView(ListView):
+    model = ToDo
+    template_name = 'toDo/home.html'
+    context_object_name = 'todos'
+    ordering = ['-date_posted']
