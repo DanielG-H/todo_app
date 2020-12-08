@@ -10,7 +10,7 @@
                 <h5 class="card-text"> Date Posted - {{ object.date_posted|date:"F d, Y" }}</h5>
                 <p class="card-text">{{ object.description }}</p>
                 <a class="mr-4">{{ object.status }}</a>
-                <a class="mr-4" href="#">{{ object.author }}</a>
+                <a class="mr-4" href="{% url 'user_profile' pk=object.id %}">{{ object.author }}</a>
             </div>
         </div>
         <div class="card-footer">

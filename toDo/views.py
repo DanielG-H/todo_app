@@ -57,3 +57,10 @@ class ToDoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == todo.author:
             return True
         return False
+
+
+def user_profile(request, pk):
+    context = {
+        'user': User.objects.filter(id=pk).first()
+    }
+    return render(request, 'users/user_profile.html', context)

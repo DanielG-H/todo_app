@@ -9,7 +9,7 @@ class ToDo(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
-    due_date = models.DateTimeField()
+    due_date = models.DateTimeField(default=timezone.now)
     status = models.CharField(default=StatusList.TODO, choices=StatusList.choices(), max_length=255)
     image = models.ImageField(default="default_todo.jpg", upload_to="todo_pics")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
