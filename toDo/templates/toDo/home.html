@@ -13,13 +13,11 @@
                 <div class="card-body">
                     <h2 class="card-title">{{ todo.title }}</h2>
                     <h5 class="card-text"> Due Date - {{ todo.due_date }}</h5>
-                    <h5 class="card-text"> Date Posted - {{ todo.date_posted }}</h5>
-                    <p class="card-text">{{ todo.description }}</p>
                      <a class="mr-4">{{ todo.status }}</a>
                     <a class="mr-4" href="#">{{ todo.author }}</a>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">View Details</a>
+                    <a href="{% url 'toDo-post_detail' pk=todo.id %}" class="btn btn-primary">View Details</a>
                 </div>
             </div>
         </div>

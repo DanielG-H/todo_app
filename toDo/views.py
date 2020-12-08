@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import ToDo
 
 
@@ -10,13 +12,48 @@ def home(request):
     return render(request, 'toDo/home.html', context)
 
 
-class PostListView(ListView):
+class ToDoListView(ListView):
     model = ToDo
     template_name = 'toDo/home.html'
     context_object_name = 'todos'
     ordering = ['-date_posted']
 
 
-class PostDetailView(DetailView):
+class ToDoDetailView(DetailView):
     model = ToDo
     template_name = 'toDo/toDo-post_detail.html'
+
+
+class ToDoCreateView(LoginRequiredMixin, CreateView):
+    model = ToDo
+    fields = ['title', 'description', 'status', 'due_date']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class ToDoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ToDo
+    fields = ['title', 'description', 'status', 'due_date']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        todo = self.get_object()
+        if self.request.user == todo.author:
+            return True
+        return False
+
+
+class ToDoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = ToDo
+    success_url = '/'
+
+    def test_func(self):
+        todo = self.get_object()
+        if self.request.user == todo.author:
+            return True
+        return False

@@ -1,8 +1,10 @@
 from django.urls import path
-# from .views import PostListView
-from . import views
+from .views import ToDoListView, ToDoDetailView, ToDoCreateView, ToDoUpdateView,  ToDoDeleteView
 
 urlpatterns = [
-    path('', views.home, name='toDo-home')
+    path('', ToDoListView.as_view(), name='toDo-home'),
+    path('toDo/<int:pk>', ToDoDetailView.as_view(), name="toDo-post_detail"),
+    path('toDo/new/', ToDoCreateView.as_view(), name="toDo_create"),
+    path('toDo/<int:pk>/update/', ToDoUpdateView.as_view(), name="toDo_update"),
+    path('toDo/<int:pk>/delete/', ToDoDeleteView.as_view(), name="toDo_delete"),
 ]
-
