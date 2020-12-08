@@ -26,7 +26,7 @@ class ToDoDetailView(DetailView):
 
 class ToDoCreateView(LoginRequiredMixin, CreateView):
     model = ToDo
-    fields = ['title', 'description', 'status', 'due_date']
+    fields = ['title', 'description', 'status', 'due_date', 'image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -35,7 +35,7 @@ class ToDoCreateView(LoginRequiredMixin, CreateView):
 
 class ToDoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = ToDo
-    fields = ['title', 'description', 'status', 'due_date']
+    fields = ['title', 'description', 'status', 'due_date', 'image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

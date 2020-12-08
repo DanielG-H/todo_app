@@ -11,6 +11,7 @@ class ToDo(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     due_date = models.DateTimeField()
     status = models.CharField(default=StatusList.TODO, choices=StatusList.choices(), max_length=255)
+    image = models.ImageField(default="default_todo.jpg", upload_to="todo_pics")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
